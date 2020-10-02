@@ -1,10 +1,14 @@
-import { Entity, Column, PrimaryColumn, CreateDateColumn, UpdateDateColumn, BaseEntity, AfterLoad, BeforeInsert, ManyToMany, JoinTable } from 'typeorm';
+import { Entity, Column, PrimaryColumn, CreateDateColumn, UpdateDateColumn, BaseEntity, AfterLoad, BeforeInsert, ManyToMany, JoinTable, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import { Credential } from './credential.entity';
 const crypto = require('crypto');
 
 @Entity()
 export class User extends BaseEntity {
 
-    @PrimaryColumn()
+    @PrimaryGeneratedColumn()
+    id: number;
+
+    @Column({ unique: true })
     username: string;
 
     @Column()
@@ -18,6 +22,11 @@ export class User extends BaseEntity {
 
     @UpdateDateColumn({ select: false })
     updatedAt: string;
+
+    @OneToMany(type => Credential, credential => credential.user, {
+        cascade: true
+    })
+    credential: Credential[];
 
     @BeforeInsert()
     async encryptPassword() {

@@ -15,4 +15,16 @@ export class AppController {
     return { status: 'Account Created' };
   }
 
+  @Post('user/auth')
+  async signin(@Body() { username, password }) {
+    //Check if User Already Exists.
+    let user = await this.appService.findOne(username);
+    if (!user) return { status: 'User Does not exist.' };
+
+    //Verify Password.
+    if (password !== user.password) return { status: 'Incorrect Credentials.' }
+
+    return { status: 'Success', userId: user.id };
+  }
+
 }
