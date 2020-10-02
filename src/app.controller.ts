@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post, Query } from '@nestjs/common';
 import { AppService } from './app.service';
 
 @Controller('app')
@@ -17,7 +17,7 @@ export class AppController {
 
   @Post('user/auth')
   async signin(@Body() { username, password }) {
-    //Check if User Already Exists.
+    //Check if User Exists Or Not.
     let user = await this.appService.findOne(username);
     if (!user) return { status: 'User Does not exist.' };
 
@@ -25,6 +25,13 @@ export class AppController {
     if (password !== user.password) return { status: 'Incorrect Credentials.' }
 
     return { status: 'Success', userId: user.id };
+  }
+
+  @Post('sites')
+  async addCredential(@Query('userId') userId, @Body() credential) {
+    credential.userId = userId;
+    credential = await this.appService.addCredential(credential);
+    return { status: 'Success' };
   }
 
 }

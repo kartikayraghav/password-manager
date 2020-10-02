@@ -3,6 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm/dist/typeorm.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { User } from './entities/user.entity';
+import { Credential } from './entities/credential.entity';
 
 require('dotenv').config();
 
@@ -24,7 +25,7 @@ const { MYSQL_HOST, MYSQL_PORT, MYSQL_USERNAME, MYSQL_PASSWORD, MYSQL_DATABASE }
         // logging: true
       }
     ),
-    TypeOrmModule.forFeature([User]),
+    TypeOrmModule.forFeature([User, Credential]),
   ],
   controllers: [AppController],
   providers: [AppService],
