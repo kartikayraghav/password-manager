@@ -9,6 +9,9 @@ export class Credential extends BaseEntity {
     id: number;
 
     @Column({ unique: true })
+    website: string;
+
+    @Column({ unique: true })
     username: string;
 
     @Column()
