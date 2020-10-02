@@ -9,10 +9,10 @@ export class AppController {
   async addUser(@Body() user) {
     //Check if User Already Exists.
     let _user = await this.appService.findOne(user.username);
-    if (_user) return { status: 'User Already exists.', user };
+    if (_user) return { status: 'User Already exists.' };
 
     user = await this.appService.add(user);
-    return { status: 'Account Created', user };
+    return { status: 'Account Created' };
   }
 
 }
