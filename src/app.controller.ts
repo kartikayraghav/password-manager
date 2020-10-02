@@ -6,9 +6,13 @@ export class AppController {
   constructor(private readonly appService: AppService) { }
 
   @Post('user')
-  addUser(@Body() { username, password }) {
+  async addUser(@Body() user) {
+    //Check if User Already Exists.
+    let _user = await this.appService.findOne(user.username);
+    if (_user) return { status: 'User Already exists.', user };
 
-    return { status: 'Account Created' };
+    user = await this.appService.add(user);
+    return { status: 'Account Created', user };
   }
 
 }
