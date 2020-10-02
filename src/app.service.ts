@@ -29,6 +29,11 @@ export class AppService {
     return await newCredential.save();
   }
 
+  //Get Credentials For a User.
+  async getCredentials(user): Promise<any> {
+    return await this.CREDENTIAL.find({ user });
+  }
+
 
 
 }

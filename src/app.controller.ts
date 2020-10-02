@@ -28,10 +28,16 @@ export class AppController {
   }
 
   @Post('sites')
-  async addCredential(@Query('userId') userId, @Body() credential) {
-    credential.userId = userId;
+  async addCredential(@Query('user') user, @Body() credential) {
+    credential.user = user;
     credential = await this.appService.addCredential(credential);
     return { status: 'Success' };
+  }
+
+  @Get('sites/list')
+  async getCredentials(@Query('user') user) {
+    let credentials = await this.appService.getCredentials(user);
+    return credentials;
   }
 
 }
